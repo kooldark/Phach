@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hình Học Vui Nhộn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: linear-gradient(135deg, #FFE5E5 0%, #E5F3FF 100%);
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .shape {
+            position: absolute;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .shape:hover {
+            transform: scale(1.2) !important;
+        }
+
+        .circle {
+            border-radius: 50%;
+            animation: bounce 3s;
+        }
+
+        .square {
+            animation: rotate 4s;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid;
+            animation: wiggle 2s;
+        }
+
+        .star {
+            animation: twinkle 2.5s;
+        }
+
+        .heart {
+            animation: pulse 2s;
+        }
+
+        .face {
+            position: absolute;
+            color: white;
+            font-size: 40px;
+            text-align: center;
+            line-height: 100px;
+            animation: smile 3s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-20px) rotate(-10deg); }
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.1); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg) translateX(-10px); }
+            75% { transform: rotate(15deg) translateX(10px); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 0.7; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes smile {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container"></div>
+
+    <script>
+        const shapes = [
+            { type: 'circle', name: 'Hình Tròn', emoji: '🔴', color: '#FF6B9D' },
+            { type: 'square', name: 'Hình Vuông', emoji: '🟦', color: '#4ECDC4' },
+            { type: 'triangle', name: 'Hình Tam Giác', emoji: '🔺', color: '#FFD93D' },
+            { type: 'star', name: 'Ngôi Sao', emoji: '⭐', color: '#FFA07A' },
+            { type: 'heart', name: 'Trái Tim', emoji: '💖', color: '#FF85B3' }
+        ];
+
+        let currentIndex = 0;
+        const container = document.getElementById('container');
+
+        function showShape(index) {
+            container.innerHTML = '';
+            const shapeData = shapes[index];
+            
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            `;
+
+            const shapeElement = document.createElement('div');
+            shapeElement.className = 'shape ' + shapeData.type;
+            shapeElement.style.position = 'relative';
+            shapeElement.style.margin = '0 auto 30px';
+            
+            if (shapeData.type === 'circle') {
+                shapeElement.style.width = '200px';
+                shapeElement.style.height = '200px';
+                shapeElement.style.backgroundColor = shapeData.color;
+                shapeElement.style.borderRadius = '50%';
+            } else if (shapeData.type === 'square') {
+                shapeElement.style.width = '200px';
+                shapeElement.style.height = '200px';
+                shapeElement.style.backgroundColor = shapeData.color;
+                shapeElement.style.borderRadius = '20px';
+            } else if (shapeData.type === 'triangle') {
+                shapeElement.style.borderLeftWidth = '100px';
+                shapeElement.style.borderRightWidth = '100px';
+                shapeElement.style.borderBottomWidth = '173px';
+                shapeElement.style.borderBottomColor = shapeData.color;
+                shapeElement.style.borderLeftColor = 'transparent';
+                shapeElement.style.borderRightColor = 'transparent';
+            } else if (shapeData.type === 'star' || shapeData.type === 'heart') {
+                shapeElement.style.fontSize = '200px';
+                shapeElement.textContent = shapeData.emoji;
+            }
+
+            const label = document.createElement('div');
+            label.style.cssText = `
+                font-size: 48px;
+                color: #333;
+                font-weight: bold;
+                margin-top: 20px;
+            `;
+            label.textContent = shapeData.name;
+
+            wrapper.appendChild(shapeElement);
+            wrapper.appendChild(label);
+            container.appendChild(wrapper);
+        }
+
+        function nextShape() {
+            currentIndex = (currentIndex + 1) % shapes.length;
+            showShape(currentIndex);
+        }
+
+        // Hiển thị hình đầu tiên
+        showShape(currentIndex);
+
+        // Tự động chuyển hình mỗi 3 giây
+        setInterval(nextShape, 3000);
+
+        // Nhấn vào màn hình để chuyển hình
+        container.addEventListener('click', nextShape);
+    </script>
+</body>
+</html>
