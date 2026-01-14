@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Số 1-10 - Cho Bé 2 Tuổi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 1s ease;
+        }
+
+        .card {
+            background: white;
+            border-radius: 40px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .number {
+            font-size: clamp(120px, 20vw, 250px);
+            font-weight: bold;
+            color: #FF6B9D;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .name {
+            font-size: clamp(50px, 8vw, 100px);
+            font-weight: bold;
+            color: #7C4DFF;
+        }
+
+        .animals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .animal {
+            font-size: clamp(60px, 10vw, 100px);
+            animation: bounce 0.6s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-15px); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide-out {
+            animation: slideOut 0.5s ease-out;
+        }
+
+        .controls {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .counter {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            padding: 10px 25px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            padding: 30px;
+            transition: right 0.3s ease;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-panel h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .setting-item {
+            margin-bottom: 30px;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .setting-item input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .setting-item input[type="checkbox"] {
+            width: 50px;
+            height: 25px;
+        }
+
+        .setting-item select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .value-display {
+            display: inline-block;
+            margin-left: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 99;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .card {
+                padding: 30px;
+                gap: 20px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-area" id="cardArea">
+            <div class="card" id="card">
+                <div class="number" id="number">1</div>
+                <div class="name" id="name">MỘT</div>
+                <div class="animals" id="animals"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="prevBtn">⬅️ Trước</button>
+            <button class="btn" id="playBtn">▶️ Tự động</button>
+            <div class="counter" id="counter">1/10</div>
+            <button class="btn" id="nextBtn">Sau ➡️</button>
+        </div>
+
+        <button class="settings-btn" id="settingsBtn">⚙️</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <h2>⚙️ Cài Đặt</h2>
+        
+        <div class="setting-item">
+            <label>⏱️ Thời gian mỗi thẻ: <span class="value-display" id="timeValue">4s</span></label>
+            <input type="range" id="timeRange" min="2" max="10" value="4" step="1">
+        </div>
+
+        <div class="setting-item">
+            <label>🔀 Chế độ hiển thị:</label>
+            <select id="modeSelect">
+                <option value="sequential">Sequential (1→2→3...)</option>
+                <option value="random">Random (Ngẫu nhiên)</option>
+            </select>
+        </div>
+
+        <div class="setting-item">
+            <label>🔊 Âm thanh: <span class="value-display" id="soundValue">Bật</span></label>
+            <input type="checkbox" id="soundCheck" checked>
+        </div>
+
+        <div class="setting-item">
+            <label>✨ Animation: <span class="value-display" id="animValue">Bật</span></label>
+            <input type="checkbox" id="animCheck" checked>
+        </div>
+
+        <div class="setting-item">
+            <label>🚀 Tốc độ animation: <span class="value-display" id="speedValue">0.7x</span></label>
+            <input type="range" id="speedRange" min="0.5" max="2" value="0.7" step="0.1">
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { number: 1, name: 'MỘT', animals: ['🐶'] },
+            { number: 2, name: 'HAI', animals: ['🐱', '🐱'] },
+            { number: 3, name: 'BA', animals: ['🐰', '🐰', '🐰'] },
+            { number: 4, name: 'BỐN', animals: ['🐻', '🐻', '🐻', '🐻'] },
+            { number: 5, name: 'NĂM', animals: ['🐸', '🐸', '🐸', '🐸', '🐸'] },
+            { number: 6, name: 'SÁU', animals: ['🐦', '🐦', '🐦', '🐦', '🐦', '🐦'] },
+            { number: 7, name: 'BẢY', animals: ['🐠', '🐠', '🐠', '🐠', '🐠', '🐠', '🐠'] },
+            { number: 8, name: 'TÁM', animals: ['🦋', '🦋', '🦋', '🦋', '🦋', '🦋', '🦋', '🦋'] },
+            { number: 9, name: 'CHÍN', animals: ['🐝', '🐝', '🐝', '🐝', '🐝', '🐝', '🐝', '🐝', '🐝'] },
+            { number: 10, name: 'MƯỜI', animals: ['🐞', '🐞', '🐞', '🐞', '🐞', '🐞', '🐞', '🐞', '🐞', '🐞'] }
+        ];
+
+        const gradients = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+        ];
+
+        let currentIndex = 0;
+        let isPlaying = false;
+        let autoInterval = null;
+        let settings = {
+            time: 4,
+            mode: 'sequential',
+            sound: true,
+            animation: true,
+            speed: 0.7
+        };
+
+        const cardArea = document.getElementById('cardArea');
+        const card = document.getElementById('card');
+        const numberEl = document.getElementById('number');
+        const nameEl = document.getElementById('name');
+        const animalsEl = document.getElementById('animals');
+        const counterEl = document.getElementById('counter');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const overlay = document.getElementById('overlay');
+
+        const timeRange = document.getElementById('timeRange');
+        const timeValue = document.getElementById('timeValue');
+        const modeSelect = document.getElementById('modeSelect');
+        const soundCheck = document.getElementById('soundCheck');
+        const soundValue = document.getElementById('soundValue');
+        const animCheck = document.getElementById('animCheck');
+        const animValue = document.getElementById('animValue');
+        const speedRange = document.getElementById('speedRange');
+        const speedValue = document.getElementById('speedValue');
+
+        function showCard(index, animate = true) {
+            const item = data[index];
+            
+            if (animate && settings.animation) {
+                card.classList.add('slide-out');
+                setTimeout(() => {
+                    updateCardContent(item, index);
+                    card.classList.remove('slide-out');
+                    card.classList.add('slide-in');
+                    setTimeout(() => card.classList.remove('slide-in'), 500 * settings.speed);
+                }, 500 * settings.speed);
+            } else {
+                updateCardContent(item, index);
+            }
+        }
+
+        function updateCardContent(item, index) {
+            numberEl.textContent = item.number;
+            nameEl.textContent = item.name;
+            animalsEl.innerHTML = '';
+            
+            item.animals.forEach((animal, i) => {
+                const span = document.createElement('span');
+                span.className = 'animal';
+                span.textContent = animal;
+                span.style.animationDelay = `${i * 0.1 * settings.speed}s`;
+                if (!settings.animation) span.style.animation = 'none';
+                animalsEl.appendChild(span);
+            });
+
+            counterEl.textContent = `${index + 1}/10`;
+            cardArea.style.background = gradients[index % gradients.length];
+
+            if (settings.sound) {
+                playSound(item.number);
+            }
+        }
+
+        function playSound(num) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 400 + (num * 50);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function nextCard() {
+            if (settings.mode === 'random') {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * 10);
+                } while (newIndex === currentIndex); // Tránh chọn lại số hiện tại
+                currentIndex = newIndex;
+            } else {
+                currentIndex = (currentIndex + 1) % 10;
+            }
+            showCard(currentIndex);
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + 10) % 10;
+            showCard(currentIndex);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playBtn.textContent = '⏸️ Dừng';
+                autoInterval = setInterval(nextCard, settings.time * 1000);
+            } else {
+                playBtn.textContent = '▶️ Tự động';
+                clearInterval(autoInterval);
+            }
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', () => {
+            if (isPlaying) togglePlay();
+            nextCard();
+        });
+        prevBtn.addEventListener('click', () => {
+            if (isPlaying) togglePlay();
+            prevCard();
+        });
+
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.add('open');
+            overlay.classList.add('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            settingsPanel.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+
+        timeRange.addEventListener('input', (e) => {
+            settings.time = parseInt(e.target.value);
+            timeValue.textContent = `${settings.time}s`;
+            if (isPlaying) {
+                clearInterval(autoInterval);
+                autoInterval = setInterval(nextCard, settings.time * 1000);
+            }
+        });
+
+        modeSelect.addEventListener('change', (e) => {
+            settings.mode = e.target.value;
+        });
+
+        soundCheck.addEventListener('change', (e) => {
+            settings.sound = e.target.checked;
+            soundValue.textContent = settings.sound ? 'Bật' : 'Tắt';
+        });
+
+        animCheck.addEventListener('change', (e) => {
+            settings.animation = e.target.checked;
+            animValue.textContent = settings.animation ? 'Bật' : 'Tắt';
+        });
+
+        speedRange.addEventListener('input', (e) => {
+            settings.speed = parseFloat(e.target.value);
+            speedValue.textContent = `${settings.speed}x`;
+        });
+
+        showCard(0, false);
+    </script>
+</body>
+</html>
