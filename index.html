@@ -223,6 +223,33 @@
             color: #666;
         }
 
+        .home-btn {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .home-btn:active {
+            transform: translateY(0);
+        }
+
         /* Settings */
         .settings-btn {
             position: fixed;
@@ -350,6 +377,9 @@
 <body>
     <div class="container" id="container"></div>
     <div class="counter"><span id="cardCount">1</span> / <span id="cardTotal">26</span></div>
+    
+    <a href="menu.html" class="home-btn" title="Quay lại menu">🏠</a>
+    
     <div class="controls">
         <button id="prevBtn" title="Previous">❮</button>
         <button id="playBtn" title="Play/Pause">▶</button>

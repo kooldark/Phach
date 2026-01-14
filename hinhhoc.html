@@ -258,6 +258,36 @@
             transform: scale(0.95);
         }
 
+        /* Home Button */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            color: #333;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+            z-index: 1000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .home-btn:active {
+            transform: scale(0.95);
+        }
+
         /* Modal Settings */
         .modal {
             display: none;
@@ -407,6 +437,7 @@
     </style>
 </head>
 <body>
+    <a href="menu.html" class="home-btn" title="Quay lại menu">🏠</a>
     <button class="settings-btn" onclick="openSettings()">⚙️</button>
 
     <!-- Settings Modal -->
