@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bé Học Hình Dạng & Màu Sắc</title>
+    <title>Hình Học Vui Nhộn</title>
     <style>
         * {
             margin: 0;
@@ -13,854 +13,181 @@
 
         body {
             overflow: hidden;
-            background: linear-gradient(135deg, #FFF9E6 0%, #E6F7FF 100%);
-            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
-            touch-action: manipulation;
-        }
-
-        /* Respect user's motion preferences */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            background: linear-gradient(135deg, #FFE5E5 0%, #E5F3FF 100%);
+            font-family: 'Arial Rounded MT Bold', sans-serif;
         }
 
         .container {
             width: 100vw;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .screen {
-            display: none;
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px 20px;
-        }
-
-        .screen.active {
-            display: flex;
-        }
-
-        /* Màn hình chủ */
-        .home-screen {
-            justify-content: center;
-            gap: 40px;
-        }
-
-        .menu-btn {
-            width: 220px;
-            height: 140px;
-            border: none;
-            border-radius: 30px;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            color: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .menu-btn:active {
-            transform: scale(0.95);
-        }
-
-        .menu-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .shapes-btn {
-            background: linear-gradient(135deg, #FF6B9D, #FF85B3);
-        }
-
-        .colors-btn {
-            background: linear-gradient(135deg, #4ECDC4, #95E1D3);
-        }
-
-        .mix-btn {
-            background: linear-gradient(135deg, #FFD93D, #FF6B9D);
-        }
-
-        /* Màn hình chủ */
-        .title {
-            font-size: 52px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #FF6B9D, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .home-screen {
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        /* Màn hình học */
-        .learning-screen {
-            background: white;
-            border-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            padding: 40px;
-            width: 90%;
-            max-width: 600px;
-            height: 80%;
-            max-height: 700px;
-        }
-
-        .learning-screen h1 {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: #333;
-            display: none;
-        }
-
-        .display-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, #F0F9FF 0%, #FFF9E6 100%);
-            border-radius: 30px;
-            margin-bottom: 20px;
             position: relative;
         }
 
-        .shape-container {
-            text-align: center;
-        }
-
-        .shape-large {
-            font-size: 240px;
-            margin-bottom: 20px;
-            animation: bounce-soft 2s infinite;
-        }
-
-        .shape-name {
-            font-size: 44px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-            display: none;
-        }
-
-        .shape-color-info {
-            font-size: 32px;
-            color: #666;
-            display: none;
-        }
-
-        @keyframes bounce-soft {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .controls {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .btn {
-            padding: 18px 35px;
-            border: none;
-            border-radius: 20px;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            color: white;
-        }
-
-        .btn-prev {
-            background: linear-gradient(135deg, #FFB347, #FFA07A);
-            flex: 1;
-            max-width: 160px;
-            display: none;
-        }
-
-        .btn-next {
-            background: linear-gradient(135deg, #6BCF7F, #4ECDC4);
-            flex: 1;
-            max-width: 160px;
-            display: none;
-        }
-
-        .btn-random {
-            background: linear-gradient(135deg, #FF6B9D, #FF85B3);
-            flex: 1;
-            max-width: 160px;
-        }
-
-        .btn-home {
-            background: linear-gradient(135deg, #C77DFF, #A8DADC);
-            flex: 1;
-            max-width: 160px;
-        }
-
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress-dots {
-            display: none;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ddd;
-            transition: background 0.3s;
-        }
-
-        .dot.active {
-            background: #FF6B9D;
-            transform: scale(1.3);
-        }
-
-        /* Settings Button */
-        .settings-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border: none;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
-            z-index: 1000;
-        }
-
-        .settings-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .settings-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Home Button */
-        .home-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            border: none;
-            border-radius: 50%;
-            background: white;
-            color: #333;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s;
-            z-index: 1000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .home-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .home-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Modal Settings */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal-content h2 {
-            font-size: 36px;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        .settings-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 15px;
-        }
-
-        .settings-option label {
-            font-size: 20px;
-            color: #333;
-            flex: 1;
-            text-align: left;
-        }
-
-        .toggle-switch {
-            width: 60px;
-            height: 34px;
-            background-color: #ccc;
-            border-radius: 34px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .toggle-switch.active {
-            background-color: #4ECDC4;
-        }
-
-        .toggle-switch::after {
-            content: '';
+        .shape {
             position: absolute;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background-color: white;
-            top: 3px;
-            left: 3px;
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active::after {
-            left: 29px;
-        }
-
-        .speed-control {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 15px;
-        }
-
-        .speed-control label {
-            font-size: 20px;
-            color: #333;
-        }
-
-        .speed-control input[type="range"] {
-            width: 150px;
-            height: 8px;
-            cursor: pointer;
-        }
-
-        .speed-value {
-            font-size: 18px;
-            color: #666;
-            min-width: 50px;
-            text-align: right;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            font-size: 20px;
-            font-weight: bold;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
             cursor: pointer;
             transition: transform 0.2s;
         }
 
-        .modal-btn-close {
-            background: linear-gradient(135deg, #FF6B9D, #FF85B3);
+        .shape:hover {
+            transform: scale(1.2) !important;
+        }
+
+        .circle {
+            border-radius: 50%;
+            animation: bounce 3s;
+        }
+
+        .square {
+            animation: rotate 4s;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid;
+            animation: wiggle 2s;
+        }
+
+        .star {
+            animation: twinkle 2.5s;
+        }
+
+        .heart {
+            animation: pulse 2s;
+        }
+
+        .face {
+            position: absolute;
             color: white;
-        }
-
-        .modal-btn-close:active {
-            transform: scale(0.95);
-        }
-
-        /* Màn hình chủ */
-        .title {
-            font-size: 48px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #FF6B9D, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 40px;
             text-align: center;
-            margin-bottom: 40px;
+            line-height: 100px;
+            animation: smile 3s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-20px) rotate(-10deg); }
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.1); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg) translateX(-10px); }
+            75% { transform: rotate(15deg) translateX(10px); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 0.7; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes smile {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="home-btn" title="Quay lại menu" aria-label="Return to home menu">🏠</a>
-    <button class="settings-btn" onclick="openSettings()" aria-label="Open settings" aria-expanded="false" aria-controls="settingsModal">⚙️</button>
+    <div class="container" id="container"></div>
 
-    <!-- Settings Modal -->
-    <div class="modal" id="settingsModal" role="dialog" aria-labelledby="settingsModalTitle">
-        <div class="modal-content">
-            <h2 id="settingsModalTitle">⚙️ Cài Đặt Phụ Huynh</h2>
-            
-            <div class="settings-option">
-                <label>Tự Động Chuyển</label>
-                <div class="toggle-switch" id="autoPlayToggle" onclick="toggleAutoPlay()"></div>
-            </div>
-
-            <div class="speed-control" id="speedControlDiv" style="display: none;">
-                <label>Tốc Độ (giây):</label>
-                <input type="range" id="speedSlider" min="1" max="10" value="3" onchange="updateSpeed()">
-                <span class="speed-value" id="speedValue">3s</span>
-            </div>
-
-            <div class="settings-option">
-                <label>Random Liên Tục</label>
-                <div class="toggle-switch" id="randomToggle" onclick="toggleRandom()"></div>
-            </div>
-
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-close" onclick="closeSettings()">Đóng</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Màn hình chủ -->
-        <div class="screen home-screen active">
-            <div class="title">🎨 Bé Học Hình & Màu 🎨</div>
-            <button class="menu-btn shapes-btn" onclick="startShapes()" aria-label="Learn about shapes">🔷 Hình Dạng</button>
-            <button class="menu-btn colors-btn" onclick="startColors()" aria-label="Learn about colors">🎨 Màu Sắc</button>
-            <button class="menu-btn mix-btn" onclick="startMix()" aria-label="Learn mixed shapes and colors">🎪 Mix</button>
-        </div>
-
-        <!-- Màn hình học hình dạng -->
-        <div class="screen shapes-screen">
-            <div class="learning-screen">
-                <h1>Hình Dạng</h1>
-                <div class="display-area" role="main" aria-label="Shape display area">
-                    <div class="shape-container">
-                        <div class="shape-large" id="shapeEmoji" aria-label="Shape"></div>
-                        <div class="shape-name" id="shapeName" aria-label="Shape name"></div>
-                        <div class="shape-color-info" id="shapeColor"></div>
-                    </div>
-                </div>
-                <div class="progress-dots" id="shapeDots" role="status" aria-label="Progress indicators"></div>
-                <div class="controls">
-                    <button class="btn btn-prev" onclick="prevShape()" aria-label="Show previous shape">◀ Trước</button>
-                    <button class="btn btn-random" onclick="randomShape()" aria-label="Show random shape">🎲 Random</button>
-                    <button class="btn btn-next" onclick="nextShape()" aria-label="Show next shape">Sau ▶</button>
-                </div>
-            </div>
-            <button class="btn btn-home" onclick="goHome()" aria-label="Go back to home">🏠 Trang Chủ</button>
-        </div>
-
-        <!-- Màn hình học màu sắc -->
-        <div class="screen colors-screen">
-            <div class="learning-screen">
-                <h1>Màu Sắc</h1>
-                <div class="display-area" role="main" aria-label="Color display area">
-                    <div class="shape-container">
-                        <div class="shape-large" id="colorEmoji" aria-label="Color indicator"></div>
-                        <div class="shape-name" id="colorName" aria-label="Color name"></div>
-                        <div class="shape-color-info" id="colorCode" aria-label="Color code"></div>
-                    </div>
-                </div>
-                <div class="progress-dots" id="colorDots" role="status" aria-label="Progress indicators"></div>
-                <div class="controls">
-                    <button class="btn btn-prev" onclick="prevColor()" aria-label="Show previous color">◀ Trước</button>
-                    <button class="btn btn-random" onclick="randomColor()" aria-label="Show random color">🎲 Random</button>
-                    <button class="btn btn-next" onclick="nextColor()" aria-label="Show next color">Sau ▶</button>
-                </div>
-            </div>
-            <button class="btn btn-home" onclick="goHome()" aria-label="Go back to home">🏠 Trang Chủ</button>
-        </div>
-
-        <!-- Màn hình học mix hình dạng với màu sắc -->
-        <div class="screen mix-screen">
-            <div class="learning-screen">
-                <h1>Hình & Màu Mix</h1>
-                <div class="display-area" role="main" aria-label="Mixed shape and color display area">
-                    <div class="shape-container">
-                        <div class="shape-large" id="mixEmoji" aria-label="Combined shape"></div>
-                        <div class="shape-name" id="mixShapeName" aria-label="Shape name"></div>
-                        <div class="shape-color-info" id="mixColorName" aria-label="Color information"></div>
-                    </div>
-                </div>
-                <div class="controls">
-                    <button class="btn btn-random" onclick="randomMix()" style="flex: 1; max-width: 200px;" aria-label="Show another random combination">🎲 Random Nữa</button>
-                </div>
-            </div>
-            <button class="btn btn-home" onclick="goHome()" aria-label="Go back to home">🏠 Trang Chủ</button>
-        </div>
-    </div>
-
-    <script src="settings.js"></script>
     <script>
-        // Dữ liệu hình dạng
         const shapes = [
-            { emoji: '⭕', name: 'Tròn', color: '#FF6B9D' },
-            { emoji: '🟩', name: 'Vuông', color: '#FFD93D' },
-            { emoji: '🔺', name: 'Tam Giác', color: '#6BCF7F' },
-            { emoji: '⭐', name: 'Ngôi Sao', color: '#4ECDC4' },
-            { emoji: '❤️', name: 'Trái Tim', color: '#FF85B3' }
+            { type: 'circle', name: 'Hình Tròn', emoji: '🔴', color: '#FF6B9D' },
+            { type: 'square', name: 'Hình Vuông', emoji: '🟦', color: '#4ECDC4' },
+            { type: 'triangle', name: 'Hình Tam Giác', emoji: '🔺', color: '#FFD93D' },
+            { type: 'star', name: 'Ngôi Sao', emoji: '⭐', color: '#FFA07A' },
+            { type: 'heart', name: 'Trái Tim', emoji: '💖', color: '#FF85B3' }
         ];
 
-        // Dữ liệu màu sắc
-        const colors = [
-            { emoji: '🔴', name: 'Đỏ', hex: '#FF0000' },
-            { emoji: '🟠', name: 'Cam', hex: '#FF8C00' },
-            { emoji: '🟡', name: 'Vàng', hex: '#FFD700' },
-            { emoji: '🟢', name: 'Xanh Lá', hex: '#00CC00' },
-            { emoji: '🔵', name: 'Xanh Dương', hex: '#0066FF' },
-            { emoji: '🟣', name: 'Tím', hex: '#9933FF' },
-            { emoji: '🩷', name: 'Hồng', hex: '#FF69B4' },
-            { emoji: '⚫', name: 'Đen', hex: '#000000' },
-            { emoji: '⚪', name: 'Trắng', hex: '#FFFFFF' }
-        ];
+        let currentIndex = 0;
+        const container = document.getElementById('container');
 
-        let currentShapeIndex = 0;
-        let currentColorIndex = 0;
-        let currentMixShape = 0;
-        let currentMixColor = 0;
-        let autoPlayInterval = null;
-        let currentScreen = 'shapes';
-        let audioContext = null;
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        // Load settings from localStorage
-        function loadSettings() {
-            const saved = localStorage.getItem('kidAppSettings');
-            if (saved) {
-                const settings = JSON.parse(saved);
-                // Use settings if needed for other features
-            }
-        }
-
-        // Save settings to localStorage
-        function saveSettings() {
-            localStorage.setItem('kidAppSettings', JSON.stringify({}));
-        }
-
-        // Update settings UI
-        function updateSettingsUI() {
-            const autoPlayToggle = document.getElementById('autoPlayToggle');
-            const randomToggle = document.getElementById('randomToggle');
-            const speedControlDiv = document.getElementById('speedControlDiv');
-            const speedSlider = document.getElementById('speedSlider');
-            const speedValue = document.getElementById('speedValue');
-
-            if (autoPlayToggle.classList.contains('active')) {
-                autoPlayToggle.classList.remove('active');
-                speedControlDiv.style.display = 'none';
-            } else {
-                autoPlayToggle.classList.add('active');
-                speedControlDiv.style.display = 'flex';
-            }
-
-            speedSlider.value = 3;
-            speedValue.textContent = '3s';
-        }
-
-        function openSettings() {
-            document.getElementById('settingsModal').classList.add('active');
-            document.querySelector('.settings-btn').setAttribute('aria-expanded', 'true');
-        }
-
-        function closeSettings() {
-            document.getElementById('settingsModal').classList.remove('active');
-            document.querySelector('.settings-btn').setAttribute('aria-expanded', 'false');
-            saveSettings();
-        }
-
-        function toggleAutoPlay() {
-            const autoPlayToggle = document.getElementById('autoPlayToggle');
-            autoPlayToggle.classList.toggle('active');
-            if (autoPlayToggle.classList.contains('active')) {
-                document.getElementById('speedControlDiv').style.display = 'flex';
-                startAutoPlayIfEnabled();
-            } else {
-                document.getElementById('speedControlDiv').style.display = 'none';
-                stopAutoPlay();
-            }
-        }
-
-        function toggleRandom() {
-            const randomToggle = document.getElementById('randomToggle');
-            randomToggle.classList.toggle('active');
-        }
-
-        function updateSpeed() {
-            const speedSlider = document.getElementById('speedSlider');
-            const speedValue = document.getElementById('speedValue');
-            const newSpeed = parseInt(speedSlider.value);
-            speedValue.textContent = newSpeed + 's';
+        function showShape(index) {
+            container.innerHTML = '';
+            const shapeData = shapes[index];
             
-            if (document.getElementById('autoPlayToggle').classList.contains('active') && autoPlayInterval) {
-                clearInterval(autoPlayInterval);
-                startAutoPlayIfEnabled();
-            }
-        }
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            `;
 
-        function getAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            return audioContext;
-        }
-
-        function playSuccessSound() {
-            const ctx = getAudioContext();
-            const notes = [523, 659, 784]; // C5, E5, G5
+            const shapeElement = document.createElement('div');
+            shapeElement.className = 'shape ' + shapeData.type;
+            shapeElement.style.position = 'relative';
+            shapeElement.style.margin = '0 auto 30px';
             
-            notes.forEach((freq, i) => {
-                const oscillator = ctx.createOscillator();
-                const gainNode = ctx.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(ctx.destination);
-                
-                oscillator.frequency.value = freq;
-                oscillator.type = 'sine';
-                
-                const startTime = ctx.currentTime + (i * 0.1);
-                gainNode.gain.setValueAtTime(0.3, startTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.2);
-                
-                oscillator.start(startTime);
-                oscillator.stop(startTime + 0.2);
-            });
-        }
-
-        function startAutoPlayIfEnabled() {
-            if (autoPlayInterval) {
-                clearInterval(autoPlayInterval);
+            if (shapeData.type === 'circle') {
+                shapeElement.style.width = '200px';
+                shapeElement.style.height = '200px';
+                shapeElement.style.backgroundColor = shapeData.color;
+                shapeElement.style.borderRadius = '50%';
+            } else if (shapeData.type === 'square') {
+                shapeElement.style.width = '200px';
+                shapeElement.style.height = '200px';
+                shapeElement.style.backgroundColor = shapeData.color;
+                shapeElement.style.borderRadius = '20px';
+            } else if (shapeData.type === 'triangle') {
+                shapeElement.style.borderLeftWidth = '100px';
+                shapeElement.style.borderRightWidth = '100px';
+                shapeElement.style.borderBottomWidth = '173px';
+                shapeElement.style.borderBottomColor = shapeData.color;
+                shapeElement.style.borderLeftColor = 'transparent';
+                shapeElement.style.borderRightColor = 'transparent';
+            } else if (shapeData.type === 'star' || shapeData.type === 'heart') {
+                shapeElement.style.fontSize = '200px';
+                shapeElement.textContent = shapeData.emoji;
             }
 
-            if (!document.getElementById('autoPlayToggle').classList.contains('active')) return;
+            const label = document.createElement('div');
+            label.style.cssText = `
+                font-size: 48px;
+                color: #333;
+                font-weight: bold;
+                margin-top: 20px;
+            `;
+            label.textContent = shapeData.name;
 
-            const speedSlider = document.getElementById('speedSlider');
-            const speed = parseInt(speedSlider.value);
-            const isRandom = document.getElementById('randomToggle').classList.contains('active');
-
-            autoPlayInterval = setInterval(() => {
-                if (currentScreen === 'shapes') {
-                    isRandom ? randomShape() : nextShape();
-                } else if (currentScreen === 'colors') {
-                    isRandom ? randomColor() : nextColor();
-                } else if (currentScreen === 'mix') {
-                    randomMix();
-                }
-            }, speed * 1000);
-        }
-
-        function stopAutoPlay() {
-            if (autoPlayInterval) {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = null;
-            }
-        }
-
-        // Touch handlers
-        function handleTouchStart(e) {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }
-
-        function handleTouchEnd(e) {
-            const touchEndX = e.changedTouches[0].screenX;
-            const touchEndY = e.changedTouches[0].screenY;
-            const diffX = touchStartX - touchEndX;
-            const diffY = Math.abs(touchStartY - touchEndY);
-
-            if (Math.abs(diffX) > diffY && Math.abs(diffX) > 50) {
-                if (diffX > 0) {
-                    // Swipe left -> next
-                    if (currentScreen === 'shapes') nextShape();
-                    else if (currentScreen === 'colors') nextColor();
-                    else if (currentScreen === 'mix') randomMix();
-                } else {
-                    // Swipe right -> previous
-                    if (currentScreen === 'shapes') prevShape();
-                    else if (currentScreen === 'colors') prevColor();
-                }
-            }
-        }
-
-        function showScreen(screenClass) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.querySelector(screenClass).classList.add('active');
-            
-            if (screenClass === '.shapes-screen') currentScreen = 'shapes';
-            else if (screenClass === '.colors-screen') currentScreen = 'colors';
-            else if (screenClass === '.mix-screen') currentScreen = 'mix';
-            else if (screenClass === '.home-screen') {
-                stopAutoPlay();
-                currentScreen = 'home';
-            }
-
-            startAutoPlayIfEnabled();
-        }
-
-        function startShapes() {
-            currentShapeIndex = 0;
-            updateShapeDisplay();
-            showScreen('.shapes-screen');
-        }
-
-        function startColors() {
-            currentColorIndex = 0;
-            updateColorDisplay();
-            showScreen('.colors-screen');
-        }
-
-        function startMix() {
-            currentMixShape = Math.floor(Math.random() * shapes.length);
-            currentMixColor = Math.floor(Math.random() * colors.length);
-            updateMixDisplay();
-            showScreen('.mix-screen');
-        }
-
-        function goHome() {
-            stopAutoPlay();
-            showScreen('.home-screen');
+            wrapper.appendChild(shapeElement);
+            wrapper.appendChild(label);
+            container.appendChild(wrapper);
         }
 
         function nextShape() {
-            currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
-            updateShapeDisplay();
-            playSuccessSound();
+            currentIndex = (currentIndex + 1) % shapes.length;
+            showShape(currentIndex);
         }
 
-        function prevShape() {
-            currentShapeIndex = (currentShapeIndex - 1 + shapes.length) % shapes.length;
-            updateShapeDisplay();
-        }
+        // Hiển thị hình đầu tiên
+        showShape(currentIndex);
 
-        function randomShape() {
-            currentShapeIndex = Math.floor(Math.random() * shapes.length);
-            updateShapeDisplay();
-            playSuccessSound();
-        }
+        // Tự động chuyển hình mỗi 3 giây
+        setInterval(nextShape, 3000);
 
-        function nextColor() {
-            currentColorIndex = (currentColorIndex + 1) % colors.length;
-            updateColorDisplay();
-            playSuccessSound();
-        }
-
-        function prevColor() {
-            currentColorIndex = (currentColorIndex - 1 + colors.length) % colors.length;
-            updateColorDisplay();
-        }
-
-        function randomColor() {
-            currentColorIndex = Math.floor(Math.random() * colors.length);
-            updateColorDisplay();
-            playSuccessSound();
-        }
-
-        function randomMix() {
-            currentMixShape = Math.floor(Math.random() * shapes.length);
-            currentMixColor = Math.floor(Math.random() * colors.length);
-            updateMixDisplay();
-            playSuccessSound();
-        }
-
-        function updateShapeDisplay() {
-            const shape = shapes[currentShapeIndex];
-            document.getElementById('shapeEmoji').textContent = shape.emoji;
-            document.getElementById('shapeName').textContent = shape.name;
-            document.getElementById('shapeColor').textContent = '';
-            
-            updateDots('shapeDots', currentShapeIndex, shapes.length);
-        }
-
-        function updateColorDisplay() {
-            const color = colors[currentColorIndex];
-            document.getElementById('colorEmoji').textContent = color.emoji;
-            document.getElementById('colorName').textContent = color.name;
-            document.getElementById('colorCode').textContent = color.hex;
-            
-            updateDots('colorDots', currentColorIndex, colors.length);
-        }
-
-        function updateMixDisplay() {
-            const shape = shapes[currentMixShape];
-            const color = colors[currentMixColor];
-            document.getElementById('mixEmoji').textContent = shape.emoji;
-            document.getElementById('mixShapeName').textContent = shape.name;
-            document.getElementById('mixColorName').textContent = color.name + ' - ' + color.hex;
-        }
-
-        function updateDots(containerId, current, total) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            for (let i = 0; i < total; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (i === current ? ' active' : '');
-                container.appendChild(dot);
-            }
-        }
-
-        // Khởi tạo
-        document.addEventListener('touchstart', handleTouchStart, false);
-        document.addEventListener('touchend', handleTouchEnd, false);
-        updateShapeDisplay();
-        loadSettings();
+        // Nhấn vào màn hình để chuyển hình
+        container.addEventListener('click', nextShape);
     </script>
 </body>
 </html>
